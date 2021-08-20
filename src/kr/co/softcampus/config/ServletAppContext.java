@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -112,6 +114,20 @@ public class ServletAppContext implements WebMvcConfigurer{
 		
 		InterceptorRegistration reg1= registry.addInterceptor(topMenuInterceptor);
 		reg1.addPathPatterns("/**");
+	}
+	
+	//property로 등록한 db.properties와 밑에 error_mesage.properties를 별도로 관리하기 위한 빈
+	//이렇게 해주지 않으면 dp, error_message가 서로 충돌이 나서 에러 발생
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer PropertySourcesPlaceholderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
+	
+	@Bean
+	public ReloadableResourceBundleMessageSource messageSource() {
+		ReloadableResourceBundleMessageSource res=new ReloadableResourceBundleMessageSource();
+		res.setBasenames("/WEB-INF/properties/error_message");
+		return res;
 	}
 }
 
