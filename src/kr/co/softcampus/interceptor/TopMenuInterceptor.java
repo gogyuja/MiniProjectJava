@@ -5,18 +5,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import kr.co.softcampus.beans.BoardInfoBean;
+import kr.co.softcampus.beans.UserBean;
 import kr.co.softcampus.service.TopMenuService;
 
 public class TopMenuInterceptor implements HandlerInterceptor {
 	
 	private TopMenuService topMenuService;
 	
-	public TopMenuInterceptor(TopMenuService topMenuService) {
+	private UserBean loginUserBean;
+	
+	public TopMenuInterceptor(TopMenuService topMenuService,UserBean loginUserBean) {
 		this.topMenuService=topMenuService;
+		this.loginUserBean=loginUserBean;
 	}
 	
 	@Override
@@ -28,6 +31,7 @@ public class TopMenuInterceptor implements HandlerInterceptor {
 		// 그러면 ServletappContext에서 autowired로 생성한 다음 TopMenuInterceptor로 주소값을 받아 쓰겠다는 말이다
 		List<BoardInfoBean> topMenuList=topMenuService.getTopMenuList();
 		request.setAttribute("topMenuList", topMenuList);
+		request.setAttribute("loginUserBean", loginUserBean);
 		return true;
 	}
 }
