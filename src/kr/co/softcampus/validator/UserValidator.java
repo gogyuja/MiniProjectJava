@@ -23,16 +23,20 @@ public class UserValidator implements Validator {
 		//이를 식별하는 이유는 로그인시에는 DontCheckUserIdExist를 검사하지 말아야 하기 때문이다.
 		String beanName=errors.getObjectName();
 		
-		if (beanName.equals("joinUserBean")) {
+		if (beanName.equals("joinUserBean") || beanName.equals("modifyUserBean")) {
 			if (userBean.getUser_pw().equals(userBean.getUser_pw2()) == false) {
 				errors.rejectValue("user_pw", "NotEquals");
 				errors.rejectValue("user_pw2", "NotEquals");
 			}
-
-			if (userBean.isUserIdExist() == false) {
-				errors.rejectValue("user_id", "DontCheckUserIdExist");
-			}
 		}
+		
+		//회원가입을 할때 동일회원존재여부를 체크하지 않았을 때를 확인
+		if(beanName.equals("joinUserBean")){
+				if (userBean.isUserIdExist() == false) {
+					errors.rejectValue("user_id", "DontCheckUserIdExist");
+				}
+		}
+		
 	}
 
 }
