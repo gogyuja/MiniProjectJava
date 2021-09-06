@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -148,6 +149,12 @@ public class ServletAppContext implements WebMvcConfigurer{
 		ReloadableResourceBundleMessageSource res=new ReloadableResourceBundleMessageSource();
 		res.setBasenames("/WEB-INF/properties/error_message");
 		return res;
+	}
+	
+	//파일데이터가 넘어오면 얘를 무조건 통과시켜서 알아서 설정해준다. XML로 프로젝트를 진행하면 우리가 직접 설정해줘야한다
+	@Bean
+	public StandardServletMultipartResolver multipartResolver() {
+		return new StandardServletMultipartResolver();
 	}
 }
 

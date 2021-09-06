@@ -2,9 +2,11 @@ package kr.co.softcampus.config;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterRegistration;
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -73,6 +75,16 @@ public class SpringConfigClass extends AbstractAnnotationConfigDispatcherServlet
 		CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
 		encodingFilter.setEncoding("UTF-8");
 		return new Filter[] {encodingFilter};
+	}
+
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+		// TODO Auto-generated method stub
+		super.customizeRegistration(registration);
+		
+		//매개변수 : 클라이언트가보낸 파일 데이터를 저장해놓는 임시파일경로 null이면 아파치 톰캣에서 정한 임시 폴더, 업로드 파일의 최대용량 ,파일데이터를 포함한 전체 요청정보에 대한 용량, 파일의 임계값 0이면 알아서 데이터를 받아서 알아서 저장
+		MultipartConfigElement config1= new MultipartConfigElement(null, 52428800, 524288000,0);
+		registration.setMultipartConfig(config1);
 	}
 }
 
