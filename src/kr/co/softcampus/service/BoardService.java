@@ -55,6 +55,7 @@ public class BoardService {
 		
 		writeContentBean.setContent_writer_idx(loginUserBean.getUser_idx());
 		boardDao.addContentInfo(writeContentBean);
+		
 	}
 	
 	public String getBoardInfoName(int board_info_idx) {
@@ -63,5 +64,9 @@ public class BoardService {
 	
 	public List<ContentBean> getContentList(int board_info_idx){
 		return boardDao.getContentList(board_info_idx);
+	}
+	
+	public ContentBean getContentInfo(int content_idx) {
+		return boardDao.getContentInfo(content_idx);
 	}
 }
