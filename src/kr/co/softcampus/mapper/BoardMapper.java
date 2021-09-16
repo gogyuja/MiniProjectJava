@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.session.RowBounds;
 
 import kr.co.softcampus.beans.ContentBean;
 
@@ -28,7 +29,9 @@ public interface BoardMapper {
 				"date_format(a1.content_date,'%Y-%m-%d') content_date " + 
 				"FROM content_table a1, user_table a2 " + 
 				"WHERE a1.content_writer_idx=a2.user_idx AND a1.content_board_idx=#{board_info_idx} ORDER BY a1.content_idx DESC")
-		List<ContentBean> getContentList(int board_info_idx);
+		List<ContentBean> getContentList(int board_info_idx,RowBounds rowBounds);
+		//RowBounds는 객체를 생성할때 두개의 값을 셋팅하는 데 어디서 부터 몇개를 가져오라는 정보를 셋팅한다.
+		//SQL 쿼리를 이용해 전체 다 들고온뒤 RowBounds를 활용해 어디서부터 어디까지갯수를 들고오게 한다.
 		
 		@Select("SELECT a2.user_name content_writer_name, "+
 					"date_format(a1.content_date,'%Y-%m-%d') content_date, "+
@@ -45,5 +48,9 @@ public interface BoardMapper {
 		
 		@Delete("delete from content_table where content_idx=#{content_idx}")
 		void deleteContentInfo(int content_idx);
+		
+		@Select("select count(*) from content_table where content_board_idx=#{content_board_idx}")
+		int getContentCnt(int content_board_idx);
+		
 }
 
