@@ -38,9 +38,11 @@ public class BoardController {
 		String boardInfoName=boardService.getBoardInfoName(board_info_idx);
 		model.addAttribute("boardInfoName",boardInfoName);
 		
+		//글들을 가지고 온다.
 		List<ContentBean> contentList=boardService.getContentList(board_info_idx,page);
 		model.addAttribute("contentList", contentList);
 		
+		//페이지블록을 가지고 온다.
 		PageBean pageBean=boardService.getContentCnt(board_info_idx, page);
 		model.addAttribute("pageBean",pageBean);
 		
@@ -54,6 +56,7 @@ public class BoardController {
 			, @RequestParam("content_idx")int content_idx
 			, @RequestParam("page")int page
 			,Model model) {
+	
 		model.addAttribute("board_info_idx", board_info_idx);
 		model.addAttribute("content_idx",content_idx);
 		
@@ -67,14 +70,25 @@ public class BoardController {
 	}
 	
 	@GetMapping("/write")
-	public String write(@ModelAttribute("writeContentBean")ContentBean writeContentBean, @RequestParam("board_info_idx")int board_info_idx) {
+	public String write(@ModelAttribute("writeContentBean")ContentBean writeContentBean
+			,@RequestParam("page")int page
+			,@RequestParam("board_info_idx")int board_info_idx
+			,Model model) {
+		
+		model.addAttribute("page", page);
 		
 		writeContentBean.setContent_board_idx(board_info_idx);
 		return "board/write";
 	}
 
 	@PostMapping("/write_pro")
-	public String write_pro(@Valid @ModelAttribute("writeContentBean") ContentBean writeContentBean,BindingResult result) {
+	public String write_pro(@Valid @ModelAttribute("writeContentBean") ContentBean writeContentBean
+			,@RequestParam("page")int page
+			,BindingResult result
+			,Model model) {
+		
+		model.addAttribute("page",page);
+		
 		if(result.hasErrors()) {
 			return "board/write";
 		}

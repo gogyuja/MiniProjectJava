@@ -2,19 +2,19 @@ package kr.co.softcampus.beans;
 
 public class PageBean {
 	
-	//최소 페이지 번호
+	//최소 페이지 번호. 해당 페이지 블록의 첫 페이지번호
 	private int min;
 	
-	//최대 페이지 번호
+	//최대 페이지 번호. 해당 페이지 블록의 마지막 페이지번호
 	private int max;
 	
-	//이전 버튼의 페이지 번호
+	//이전 버튼의 페이지 번호. 현재 페이지의 min이 51이라면 prevPage는 50
 	private int prevPage;
 	
-	//다음 버튼의 페이지 번호
+	//다음 버튼의 페이지 번호. 현재 페이지의 max가 60라면 nextPage는 61.만약 max가 pageCnt 많다면 pageCnt가 max가 된다. 
 	private int nextPage;
 	
-	//전체 페이지 개수
+	//전체 페이지 개수 전체글/페이지당글갯수
 	private int pageCnt;
 	
 	//현재 페이지 번호

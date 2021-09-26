@@ -10,6 +10,7 @@
 		<span class="navbar-toggler-icon"></span>        
 	</button>
 	<div class="collapse navbar-collapse" id="navMenu">
+		
 		<ul class="navbar-nav">
 			<c:forEach var='obj' items='${topMenuList}'>
 				<li class="nav-item">
